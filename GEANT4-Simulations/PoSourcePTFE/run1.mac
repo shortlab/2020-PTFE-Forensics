@@ -1,0 +1,62 @@
+# Macro file for example B4
+# 
+# Can be run in batch, without graphic
+# or interactively: Idle> /control/execute run1.mac
+#
+# Change the default number of workers (in multi-threading mode) 
+#/run/numberOfWorkers 4
+#
+# Initialize kernel
+/run/initialize
+#
+# Default kinematics: 
+# gamma .6617*MeV in direction (0.,0.,1.)
+# 1 event with tracking/verbose
+#
+/tracking/verbose 1
+/run/beamOn 10
+#
+
+
+
+#
+/score/create/cylinderMesh boxMesh_1
+#
+/score/mesh/cylinderSize 3.81 5.715 cm
+/score/mesh/translate/xyz 0.1 0.1 0.0 cm
+/score/mesh/nBin 30 30 30
+#
+/score/quantity/energyDeposit eDep
+/score/quantity/nOfStep nOfStepGamma
+/score/filter/particle gammaFilter gamma
+/score/quantity/nOfStep nOfStepEMinus
+/score/filter/particle eMinusFilter e-
+/score/quantity/nOfStep nOfStepEPlus
+/score/filter/particle ePlusFilter e+
+#
+/score/close
+#
+/score/list
+#
+/vis/disable
+/run/beamOn 2000
+/vis/enable
+#
+########################################
+#
+# drawing slices
+#
+/vis/scene/create
+/vis/sceneHandler/attach scene-2
+/score/colorMap/setMinMax ! 0. 200.
+/control/alias iAxis 1
+/control/loop drawCylinderSlice.mac iColumn 0 29 7
+#
+
+# Dump scores to a file
+#
+/score/dumpQuantityToFile boxMesh_1 eDep EnergyDeposition_NaI_BehindMask.out
+#
+
+
+

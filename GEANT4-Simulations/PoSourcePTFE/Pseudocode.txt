@@ -1,0 +1,58 @@
+Pseudocode
+
+OPTION 1:
+
+
+while k < 1
+	increment dimension
+	initialize flux throughout dimension with 1,000,000 of incident particles at randomly selected positions and 1 MeV
+		record positions of fissions, directions, and energies
+	record number of fissions = currentGenNeutrons
+	for 1:100 (to allow the flux distribution to reach a steady state)
+		record the previous fissio parameters
+		zero out the previous fission parameters
+		run at each of those fissions
+			record positions of fissions, directions, energies
+		prevGen = currentGen
+		currentGen = count of text file
+
+	k = currentGen/prevGen
+
+
+
+
+
+	Geometry nesting
+
+
+  // Assembly =     Box =       17*rodDiameter x 17*rodDiameter x rodHeight
+  // RodBox =       Box =       rodDiameter x 17*rodDiameter x rodHeight === replicated along the x axis
+  // Rod =          Cylinder =  rodDiameter x rodHeight
+  // Cladding =     Cylinder =  thickness-rodDiameter x rodHeight
+  // Fuel =         Cylinder =  pelletDiameter x rodHeight
+
+
+
+
+OPTION 2:
+while moderatorDensity < 1.2
+	for each of the initial neutrons
+      		Shoot randomly amid volume, let go for NUMGEN generations, record locations of fissions and write to file
+    count number of fissions that occurred == number of neutrons produced == currentGenNeutrons
+    calculate k resulting from that == initialK
+    if initialK < 1.2
+     	read in the written positions
+     	clear out the fission file
+     	run with the written positions, it will go for NUMGEN generations again and write results to file
+     	set prevGenNeutrons = currentGenNeutrons
+     	count number of neutrons created (size of file)
+     	calculate k and print it
+
+
+
+
+
+
+
+
+
